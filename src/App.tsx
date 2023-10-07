@@ -1,12 +1,15 @@
 import { Box } from "@mui/material";
 import "./App.css";
 import Employees from "./components/Employees";
+import { ModalProvider } from "./providers/ModalContext";
 
 function App() {
   return (
-    <Box>
-      <Employees />
-    </Box>
+    <ModalProvider>
+      <Box>
+        <Employees />
+      </Box>
+    </ModalProvider>
   );
 }
 

@@ -4,10 +4,12 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import { rows } from "../assets/mock";
 import EmployeeForm from "./EmployeeForm";
+import { useModalContext } from "../providers/ModalContext";
 
 function EmployeeList() {
-  const [dialogIsOpen, setDialogIsOpen] = useState(false); //context
   const [selectedEmployee, setSelectedEmployee] = useState(0); //context
+
+  const { openModal } = useModalContext();
 
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
@@ -25,12 +27,12 @@ function EmployeeList() {
 
   const handleNewEmployee = () => {
     setSelectedEmployee(0);
-    setDialogIsOpen(true);
+    openModal(<EmployeeForm id={selectedEmployee} />, { title: "New" });
   };
 
   const handleRowClick = (params: { id: any }) => {
     setSelectedEmployee(params.id);
-    setDialogIsOpen(true);
+    openModal(<EmployeeForm id={selectedEmployee} />, { title: "Edit" });
   };
 
   return (
@@ -60,12 +62,6 @@ function EmployeeList() {
           pageSizeOptions={[5, 10]}
         />
       </Box>
-
-      <EmployeeForm
-        isOpen={dialogIsOpen}
-        setDialogIsOpen={setDialogIsOpen}
-        id={selectedEmployee}
-      />
     </>
   );
 }
