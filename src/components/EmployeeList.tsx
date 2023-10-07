@@ -5,18 +5,31 @@ import { rows } from "../assets/mock";
 import EmployeeForm from "./EmployeeForm";
 import { useModalContext } from "../providers/ModalContext";
 import { employeeTableConfig } from "../providers/tableConfigs";
+import { useState } from "react";
+import { useGetEmployes } from "../providers/employeeQueries";
 
 function EmployeeList() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
   const { openModal } = useModalContext();
+  const { employesData, employesLoading, employesError } = useGetEmployes(
+    currentPage,
+    pageSize
+  );
+
+  console.log(employesData);
+  console.log(employesLoading);
+  console.log(employesError);
 
   const columns = employeeTableConfig;
 
   const handleNewEmployee = () => {
-    openModal(<EmployeeForm />, { title: "New" });
+    openModal(<EmployeeForm />, { title: "Create new employee" });
   };
 
   const handleRowClick = (params: { id: any }) => {
-    openModal(<EmployeeForm id={params.id} />, { title: "Edit" });
+    openModal(<EmployeeForm id={params.id} />, { title: "Edit employee info" });
   };
 
   return (
@@ -38,12 +51,17 @@ function EmployeeList() {
           rows={rows}
           columns={columns}
           onRowClick={handleRowClick}
+          pagination
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
+              paginationModel: { page: currentPage + 1, pageSize: pageSize },
             },
           }}
           pageSizeOptions={[5, 10]}
+          onStateChange={(e) => {
+            setPageSize(e.pagination.paginationModel.pageSize);
+            setCurrentPage(e.pagination.paginationModel.page + 1);
+          }}
         />
       </Box>
     </>
