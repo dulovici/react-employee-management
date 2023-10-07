@@ -58,6 +58,10 @@ const EmployeeForm: FC<IEmployeeForm> = ({ isOpen, setDialogIsOpen, id }) => {
     formik.resetForm();
     setDialogIsOpen(false);
   };
+  const deleteEmployee = () => {
+    console.log("Brisem");
+    handleClose();
+  };
 
   return (
     <div>
@@ -226,6 +230,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ isOpen, setDialogIsOpen, id }) => {
             />
 
             <Button type="submit">Submit</Button>
+            {id ? <Button onClick={deleteEmployee}>Delete</Button> : null}
             <Button onClick={handleClose}>Cancel</Button>
           </form>
         </DialogContent>

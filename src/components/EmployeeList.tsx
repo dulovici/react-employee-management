@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { rows } from "../assets/mock";
 import { Box, Button } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
+import { rows } from "../assets/mock";
 import EmployeeForm from "./EmployeeForm";
 
 function EmployeeList() {
