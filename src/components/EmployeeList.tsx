@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { rows } from "../assets/mock";
 import EmployeeForm from "./EmployeeForm";
 import { useModalContext } from "../providers/ModalContext";
 import { employeeTableConfig } from "../providers/tableConfigs";
@@ -9,18 +8,15 @@ import { useState } from "react";
 import { useGetEmployes } from "../providers/employeeQueries";
 
 function EmployeeList() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState(5);
 
   const { openModal } = useModalContext();
-  const { employesData, employesLoading, employesError } = useGetEmployes(
-    currentPage,
-    pageSize
-  );
-
-  console.log(employesData);
-  console.log(employesLoading);
-  console.log(employesError);
+  const {
+    employesData = [],
+    employesLoading,
+    employesError,
+  } = useGetEmployes(currentPage, pageSize);
 
   const columns = employeeTableConfig;
 
@@ -48,19 +44,19 @@ function EmployeeList() {
           </Button>
         </Box>
         <DataGrid
-          rows={rows}
+          rows={employesData}
           columns={columns}
           onRowClick={handleRowClick}
           pagination
           initialState={{
             pagination: {
-              paginationModel: { page: currentPage + 1, pageSize: pageSize },
+              paginationModel: { page: currentPage, pageSize: pageSize },
             },
           }}
           pageSizeOptions={[5, 10]}
           onStateChange={(e) => {
             setPageSize(e.pagination.paginationModel.pageSize);
-            setCurrentPage(e.pagination.paginationModel.page + 1);
+            setCurrentPage(e.pagination.paginationModel.page);
           }}
         />
       </Box>
