@@ -1,4 +1,4 @@
-import { Box, Button, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import DeletedEmployeeList from "./DeletedEmployeeList";
 import EmployeeList from "./EmployeeList";
 import { useState } from "react";
@@ -24,47 +24,21 @@ const Employees = () => {
         alignItems: "center",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "80%",
-          visibility:
-            selectedTab === ActiveList.Employees ? "visible" : "hidden",
-        }}
+      <Tabs
+        value={selectedTab}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
       >
-        <Button variant="contained">New Employee</Button>
-      </Box>
-
-      <Box>
-        <Tabs
-          value={selectedTab}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab label="Employees" />
-          <Tab label="Recently Deleted" />
-        </Tabs>
-        {selectedTab === ActiveList.Employees ? (
-          <EmployeeList />
-        ) : (
-          <DeletedEmployeeList />
-        )}
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "80%",
-          visibility:
-            selectedTab === ActiveList.RecentlyDeleted ? "visible" : "hidden",
-        }}
-      >
-        <Button variant="contained">Cleanup</Button>
-      </Box>
+        <Tab label="Employees" />
+        <Tab label="Recently Deleted" />
+      </Tabs>
+      {selectedTab === ActiveList.Employees ? (
+        <EmployeeList />
+      ) : (
+        <DeletedEmployeeList />
+      )}
     </Box>
   );
 };
