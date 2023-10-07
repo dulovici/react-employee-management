@@ -1,38 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../assets/mock";
 import EmployeeForm from "./EmployeeForm";
 import { useModalContext } from "../providers/ModalContext";
+import { employeeTableConfig } from "../providers/tableConfigs";
 
 function EmployeeList() {
-  const [selectedEmployee, setSelectedEmployee] = useState(0); //context
-
   const { openModal } = useModalContext();
 
-  const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", flex: 1 },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "dateOfEmployment",
-      headerName: "Starting date",
-      flex: 1,
-    },
-  ];
+  const columns = employeeTableConfig;
 
   const handleNewEmployee = () => {
-    setSelectedEmployee(0);
-    openModal(<EmployeeForm id={selectedEmployee} />, { title: "New" });
+    openModal(<EmployeeForm />, { title: "New" });
   };
 
   const handleRowClick = (params: { id: any }) => {
-    setSelectedEmployee(params.id);
-    openModal(<EmployeeForm id={selectedEmployee} />, { title: "Edit" });
+    openModal(<EmployeeForm id={params.id} />, { title: "Edit" });
   };
 
   return (

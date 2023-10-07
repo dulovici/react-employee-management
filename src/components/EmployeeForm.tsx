@@ -1,25 +1,8 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
-import * as yup from "yup";
 import { useModalContext } from "../providers/ModalContext";
-
-const validationSchema = yup.object({
-  name: yup.string().required("Name is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  phoneNumber: yup.string().required("Phone Number is required"),
-  homeAddress: yup.object({
-    city: yup.string().required("City is required"),
-    ZIPCode: yup.string().required("ZIP Code is required"),
-    addressLine1: yup.string().required("Address Line 1 is required"),
-    addressLine2: yup.string(),
-  }),
-  dateOfEmployment: yup.string().required("Date of Employment is required"),
-  dateOfBirth: yup.string().required("Date of Birth is required"),
-});
+import { employeeSchema } from "../providers/schemas";
 
 interface IEmployeeForm {
   id?: number;
@@ -27,6 +10,11 @@ interface IEmployeeForm {
 
 const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
   const { setIsOpen } = useModalContext();
+
+  const closeModal = () => {
+    formik.resetForm();
+    setIsOpen(false);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -42,20 +30,16 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
       dateOfEmployment: "",
       dateOfBirth: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: employeeSchema,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       setIsOpen(false);
     },
   });
 
-  const handleClose = () => {
-    formik.resetForm();
-    setIsOpen(false);
-  };
   const deleteEmployee = () => {
-    console.log("Brisem");
-    handleClose();
+    //deleting logic
+    closeModal();
   };
 
   return (
@@ -234,7 +218,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
         >
           <Button type="submit">Submit</Button>
           {id ? <Button onClick={deleteEmployee}>Delete</Button> : null}
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={closeModal}>Cancel</Button>
         </Box>
       </form>
     </div>
@@ -244,4 +228,3 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
 export default EmployeeForm;
 
 //Sredi Date polja
-//Exportuj semu van komponente
