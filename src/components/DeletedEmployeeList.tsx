@@ -1,24 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Button } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import { rows } from "../assets/mock";
+import { employeeTableConfig } from "../providers/tableConfigs";
 
 const DeletedEmployeeList = () => {
-  const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", flex: 1 },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "dateOfEmployment",
-      headerName: "Starting date",
-      flex: 1,
-    },
-  ];
+  const columns = employeeTableConfig;
 
-  console.log(columns);
   return (
     <Box sx={{ height: 400, width: "50%" }}>
       <DataGrid
