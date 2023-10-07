@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { FC } from "react";
 import { useModalContext } from "../providers/ModalContext";
-import { employeeSchema } from "../providers/schemas";
+import { employeeForm } from "../providers/forms";
 
 interface IEmployeeForm {
   id?: number;
@@ -11,35 +11,23 @@ interface IEmployeeForm {
 const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
   const { setIsOpen } = useModalContext();
 
-  const closeModal = () => {
+  const closeForm = () => {
     formik.resetForm();
     setIsOpen(false);
   };
 
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      phoneNumber: "",
-      homeAddress: {
-        city: "",
-        ZIPCode: "",
-        addressLine1: "",
-        addressLine2: "",
-      },
-      dateOfEmployment: "",
-      dateOfBirth: "",
-    },
-    validationSchema: employeeSchema,
+    initialValues: employeeForm.initialValues,
+    validationSchema: employeeForm.validation,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
-      setIsOpen(false);
+      closeForm();
     },
   });
 
   const deleteEmployee = () => {
     //deleting logic
-    closeModal();
+    closeForm();
   };
 
   return (
@@ -218,7 +206,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
         >
           <Button type="submit">Submit</Button>
           {id ? <Button onClick={deleteEmployee}>Delete</Button> : null}
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button onClick={closeForm}>Cancel</Button>
         </Box>
       </form>
     </div>
