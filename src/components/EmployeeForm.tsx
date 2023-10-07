@@ -3,30 +3,41 @@ import { useFormik } from "formik";
 import { FC } from "react";
 import { useModalContext } from "../providers/ModalContext";
 import { employeeForm } from "../providers/forms";
+import {
+  employeeKeys,
+  useCreateEmploye,
+  useDeleteEmploye,
+} from "../providers/employeeQueries";
+import { Employee } from "../types/types";
+import { useQueryClient } from "react-query";
 
 interface IEmployeeForm {
-  id?: number;
+  id?: string;
 }
 
-const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
+const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   const { setIsOpen } = useModalContext();
+  const queryClient = useQueryClient();
+  const createEmploye = useCreateEmploye();
+  const deleteEmployee = useDeleteEmploye();
 
   const closeForm = () => {
     formik.resetForm();
+    queryClient.invalidateQueries(employeeKeys.employes());
     setIsOpen(false);
   };
 
   const formik = useFormik({
     initialValues: employeeForm.initialValues,
     validationSchema: employeeForm.validation,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values: Employee) => {
+      createEmploye.mutate(values);
       closeForm();
     },
   });
 
-  const deleteEmployee = () => {
-    //deleting logic
+  const deleteEmployeeHandler = (id: string) => {
+    deleteEmployee.mutate(id);
     closeForm();
   };
 
@@ -205,7 +216,9 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id }) => {
           sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
         >
           <Button type="submit">Submit</Button>
-          {id ? <Button onClick={deleteEmployee}>Delete</Button> : null}
+          {id ? (
+            <Button onClick={() => deleteEmployeeHandler(id)}>Delete</Button>
+          ) : null}
           <Button onClick={closeForm}>Cancel</Button>
         </Box>
       </form>
