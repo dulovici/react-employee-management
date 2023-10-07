@@ -29,7 +29,7 @@ const ModalProvider = (props: any) => {
 
   return (
     <ModalContext.Provider value={values} {...props}>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} maxWidth="md">
         <DialogTitle>{options.title || ""}</DialogTitle>
 
         <DialogContent>{modalContent}</DialogContent>
