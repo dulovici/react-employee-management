@@ -63,7 +63,7 @@ function EmployeeList() {
           pageSizeOptions={[5, 10]}
           onStateChange={(e) => {
             setPageSize(e.pagination.paginationModel.pageSize);
-            setCurrentPage(e.pagination.paginationModel.page);
+            setCurrentPage(e.pagination.paginationModel.page + 1);
           }}
         />
       </Box>

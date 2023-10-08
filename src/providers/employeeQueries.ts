@@ -11,8 +11,10 @@ import {
 import { Employee } from "../types/types";
 
 export const employeeKeys = {
-  employes: (page?: number, limit?: number) =>
-    ["employes", page, limit] as const,
+  employes: (page?: number, limit?: number) => {
+    if (page && limit) return ["employes", page, limit];
+    return ["employes"];
+  },
 
   employe: (employeeId: string) => ["employe", employeeId] as const,
 

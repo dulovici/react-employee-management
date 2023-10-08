@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useEffect } from "react";
@@ -55,6 +56,20 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
       formik.setValues(employeData);
     }
   }, [employeData]);
+
+  useEffect(() => {
+    if (
+      createEmploye.isSuccess ||
+      updateEmployee.isSuccess ||
+      deleteEmployee.isSuccess
+    ) {
+      queryClient.invalidateQueries(employeeKeys.employes());
+    }
+  }, [
+    createEmploye.isSuccess,
+    updateEmployee.isSuccess,
+    deleteEmployee.isSuccess,
+  ]);
 
   if (employeLoading) {
     return <div>Loading...</div>;
@@ -248,5 +263,4 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
 export default EmployeeForm;
 
 //popravi post??
-//resi invalidaciju
 //Sredi Date polja
