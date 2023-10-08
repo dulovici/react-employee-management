@@ -13,3 +13,17 @@ export const employeeTableConfig: GridColDef[] = [
     flex: 1,
   },
 ];
+
+export const deletedEmployesTableConfig: GridColDef[] = [
+  { field: "name", headerName: "Name", flex: 1 },
+  {
+    field: "email",
+    headerName: "Email",
+    flex: 1,
+  },
+  {
+    field: "deletedAt",
+    headerName: "Deleted at",
+    flex: 1,
+  },
+];

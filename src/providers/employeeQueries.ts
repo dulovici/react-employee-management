@@ -24,16 +24,15 @@ export const employeeKeys = {
 };
 
 export const useGetEmployes = (page: number, limit: number) => {
-  const pageToUse = page ? page : 1;
   const {
     isLoading: employesLoading,
     error: employesError,
     data,
-  } = useQuery<boolean, Error, any>(
-    employeeKeys.employes(pageToUse, limit),
-    () => getEmployees(pageToUse, limit)
+  } = useQuery<boolean, Error, any>(employeeKeys.employes(page, limit), () =>
+    getEmployees(page, limit)
   );
 
+  const employesNumber = data?.count;
   const employesData = data?.employees?.map((el: Employee) => ({
     ...el,
     id: el._id,
@@ -44,18 +43,20 @@ export const useGetEmployes = (page: number, limit: number) => {
     employesLoading,
     employesError,
     employesData,
+    employesNumber,
   };
 };
 
-export const useDeletedEmployes = () => {
+export const useDeletedEmployes = (page: number, limit: number) => {
   const {
     isLoading: deletedEmployesLoading,
     error: deletedEmployesError,
     data,
   } = useQuery<boolean, Error, any>(employeeKeys.deletedEmployes, () =>
-    getDeletedEmployees()
+    getDeletedEmployees(page, limit)
   );
 
+  const deletedEmployesNumber = data?.count;
   const deletedEmployesData = data?.employees?.map((el: Employee) => ({
     ...el,
     id: el._id,
@@ -66,6 +67,7 @@ export const useDeletedEmployes = () => {
     deletedEmployesLoading,
     deletedEmployesError,
     deletedEmployesData,
+    deletedEmployesNumber,
   };
 };
 
@@ -109,3 +111,5 @@ export const useDeleteEmploye = () =>
       console.log("successCallback();");
     },
   });
+
+//Resi clg

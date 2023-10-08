@@ -1,24 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Button } from "@mui/material";
+import { Alert, Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import EmployeeForm from "./EmployeeForm";
 import { useModalContext } from "../providers/ModalContext";
 import { employeeTableConfig } from "../providers/tableConfigs";
 import { useState } from "react";
 import { useGetEmployes } from "../providers/employeeQueries";
+import Pagination from "@mui/material/Pagination";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function EmployeeList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const PAGE_SIZE = 5;
 
   const { openModal } = useModalContext();
-  const {
-    employesData = [],
-    employesLoading,
-    employesError,
-  } = useGetEmployes(currentPage, pageSize);
+  const { employesData, employesLoading, employesError, employesNumber } =
+    useGetEmployes(currentPage, PAGE_SIZE);
 
-  const columns = employeeTableConfig;
+  const pageNumber = Math.ceil(employesNumber / PAGE_SIZE);
 
   const handleNewEmployee = () => {
     openModal(<EmployeeForm />, { title: "Create new employee" });
@@ -29,15 +28,20 @@ function EmployeeList() {
   };
 
   if (employesError) {
-    return <div>Errror</div>;
+    return <Alert severity="error">Something went wrong</Alert>;
   }
   if (employesLoading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   return (
     <>
-      <Box sx={{ height: 400, width: "50%" }}>
+      <Box
+        sx={{
+          height: 400,
+          width: "50%",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -50,20 +54,18 @@ function EmployeeList() {
             New Employee
           </Button>
         </Box>
+
         <DataGrid
           rows={employesData}
-          columns={columns}
+          columns={employeeTableConfig}
           onRowClick={handleRowClick}
-          pagination
-          initialState={{
-            pagination: {
-              paginationModel: { page: currentPage, pageSize: pageSize },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          onStateChange={(e) => {
-            setPageSize(e.pagination.paginationModel.pageSize);
-            setCurrentPage(e.pagination.paginationModel.page + 1);
+          hideFooter={true}
+        />
+        <Pagination
+          count={pageNumber}
+          page={currentPage}
+          onChange={(_, newPage) => {
+            setCurrentPage(newPage);
           }}
         />
       </Box>

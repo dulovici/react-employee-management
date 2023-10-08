@@ -6,8 +6,10 @@ export const getEmployees = async (page: number, limit: number) => {
   return result.data;
 };
 
-export const getDeletedEmployees = async () => {
-  const result = await client.get(`/employees/deleted`);
+export const getDeletedEmployees = async (page: number, limit: number) => {
+  const result = await client.get(
+    `/employees/deleted?page=${page}&limit=${limit}`
+  );
   return result.data;
 };
 
