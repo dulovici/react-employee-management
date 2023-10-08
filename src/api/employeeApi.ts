@@ -22,7 +22,7 @@ export const createEmployee = async (employee: Employee) => {
 };
 
 export const updateEmployee = async (employee: Employee) => {
-  const result = await client.put(`/employees/${employee._id}`, employee);
+  const result = await client.patch(`/employees/${employee._id}`, employee);
   return result.data;
 };
 

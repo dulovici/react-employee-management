@@ -8,6 +8,7 @@ import {
   useCreateEmploye,
   useDeleteEmploye,
   useGetEmploye,
+  useUpdateEmployee,
 } from "../providers/employeeQueries";
 import { Employee } from "../types/types";
 import { useQueryClient } from "react-query";
@@ -18,10 +19,11 @@ interface IEmployeeForm {
 
 const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   const { setIsOpen } = useModalContext();
-  const queryClient = useQueryClient();
-
   const { employeData, employeLoading } = useGetEmploye(id);
+
+  const queryClient = useQueryClient();
   const createEmploye = useCreateEmploye();
+  const updateEmployee = useUpdateEmployee();
   const deleteEmployee = useDeleteEmploye();
 
   const closeForm = () => {
@@ -30,19 +32,23 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
     setIsOpen(false);
   };
 
-  const formik = useFormik({
-    initialValues: employeeForm.initialValues,
-    validationSchema: employeeForm.validation,
-    onSubmit: (values: Employee) => {
-      createEmploye.mutate(values);
-      closeForm();
-    },
-  });
-
   const deleteEmployeeHandler = (id: string) => {
     deleteEmployee.mutate(id);
     closeForm();
   };
+
+  const subbmitHandler = (id: string, values: Employee) => {
+    id ? updateEmployee.mutate(values) : createEmploye.mutate(values);
+    closeForm();
+  };
+
+  const formik = useFormik({
+    initialValues: employeeForm.initialValues,
+    validationSchema: employeeForm.validation,
+    onSubmit: (values: Employee) => {
+      subbmitHandler(id, values);
+    },
+  });
 
   useEffect(() => {
     if (employeData) {

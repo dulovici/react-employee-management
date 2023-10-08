@@ -6,6 +6,7 @@ import {
   getDeletedEmployees,
   getEmployee,
   getEmployees,
+  updateEmployee,
 } from "../api/employeeApi";
 import { Employee } from "../types/types";
 
@@ -33,6 +34,7 @@ export const useGetEmployes = (page: number, limit: number) => {
     ...el,
     id: el._id,
   }));
+  //I remapped this becouse DataGrid component require id field, and on api im getting _id
 
   return {
     employesLoading,
@@ -54,6 +56,7 @@ export const useDeletedEmployes = () => {
     ...el,
     id: el._id,
   }));
+  //I remapped this becouse DataGrid component require id field, and on api im getting _id
 
   return {
     deletedEmployesLoading,
@@ -84,6 +87,13 @@ export const useGetEmploye = (employeeId: string) => {
 
 export const useCreateEmploye = () =>
   useMutation((employee: Employee) => createEmployee(employee), {
+    onSuccess: () => {
+      console.log("successCallback();");
+    },
+  });
+
+export const useUpdateEmployee = () =>
+  useMutation((employee: Employee) => updateEmployee(employee), {
     onSuccess: () => {
       console.log("successCallback();");
     },
