@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useGetEmployes } from "../providers/employeeQueries";
 
 function EmployeeList() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
 
   const { openModal } = useModalContext();
@@ -27,6 +27,13 @@ function EmployeeList() {
   const handleRowClick = (params: { id: any }) => {
     openModal(<EmployeeForm id={params.id} />, { title: "Edit employee info" });
   };
+
+  if (employesError) {
+    return <div>Errror</div>;
+  }
+  if (employesLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

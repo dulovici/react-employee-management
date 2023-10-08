@@ -45,10 +45,16 @@ export const useDeletedEmployes = () => {
   const {
     isLoading: deletedEmployesLoading,
     error: deletedEmployesError,
-    data: deletedEmployesData,
-  } = useQuery<boolean, Error, any[]>(employeeKeys.deletedEmployes, () =>
+    data,
+  } = useQuery<boolean, Error, any>(employeeKeys.deletedEmployes, () =>
     getDeletedEmployees()
   );
+
+  const deletedEmployesData = data?.employees.map((el: Employee) => ({
+    ...el,
+    id: el._id,
+  }));
+
   return {
     deletedEmployesLoading,
     deletedEmployesError,
