@@ -1,12 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useModalContext } from "../providers/ModalContext";
 import { employeeForm } from "../providers/forms";
 import {
   employeeKeys,
   useCreateEmploye,
   useDeleteEmploye,
+  useGetEmploye,
 } from "../providers/employeeQueries";
 import { Employee } from "../types/types";
 import { useQueryClient } from "react-query";
@@ -18,6 +19,8 @@ interface IEmployeeForm {
 const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   const { setIsOpen } = useModalContext();
   const queryClient = useQueryClient();
+
+  const { employeData, employeLoading } = useGetEmploye(id);
   const createEmploye = useCreateEmploye();
   const deleteEmployee = useDeleteEmploye();
 
@@ -41,6 +44,16 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
     closeForm();
   };
 
+  useEffect(() => {
+    if (employeData) {
+      formik.setValues(employeData);
+    }
+  }, [employeData]);
+
+  if (employeLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -56,7 +69,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="name"
               name="name"
               label="Name"
-              value={formik.values.name}
+              value={formik.values?.name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.name && Boolean(formik.errors.name)}
@@ -69,7 +82,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="email"
               name="email"
               label="Email"
-              value={formik.values.email}
+              value={formik.values?.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.email && Boolean(formik.errors.email)}
@@ -82,7 +95,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="phoneNumber"
               name="phoneNumber"
               label="Phone Number"
-              value={formik.values.phoneNumber}
+              value={formik.values?.phoneNumber}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -99,7 +112,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="homeAddress.city"
               name="homeAddress.city"
               label="City"
-              value={formik.values.homeAddress.city}
+              value={formik.values?.homeAddress.city}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -118,7 +131,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="homeAddress.ZIPCode"
               name="homeAddress.ZIPCode"
               label="ZIP Code"
-              value={formik.values.homeAddress.ZIPCode}
+              value={formik.values?.homeAddress.ZIPCode}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -139,7 +152,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="homeAddress.addressLine1"
               name="homeAddress.addressLine1"
               label="Address Line 1"
-              value={formik.values.homeAddress.addressLine1}
+              value={formik.values?.homeAddress.addressLine1}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -158,7 +171,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="homeAddress.addressLine2"
               name="homeAddress.addressLine2"
               label="Address Line 2"
-              value={formik.values.homeAddress.addressLine2}
+              value={formik.values?.homeAddress.addressLine2}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -178,7 +191,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="dateOfEmployment"
               name="dateOfEmployment"
               label="Date of Employment"
-              value={formik.values.dateOfEmployment}
+              value={formik.values?.dateOfEmployment}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={
@@ -198,7 +211,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
               id="dateOfBirth"
               name="dateOfBirth"
               label="Date of Birth"
-              value={formik.values.dateOfBirth}
+              value={formik.values?.dateOfBirth}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={

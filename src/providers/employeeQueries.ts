@@ -4,6 +4,7 @@ import {
   createEmployee,
   deleteEmployee,
   getDeletedEmployees,
+  getEmployee,
   getEmployees,
 } from "../api/employeeApi";
 import { Employee } from "../types/types";
@@ -11,6 +12,9 @@ import { Employee } from "../types/types";
 export const employeeKeys = {
   employes: (page?: number, limit?: number) =>
     ["employes", page, limit] as const,
+
+  employe: (employeeId: string) => ["employe", employeeId] as const,
+
   deletedEmployes: ["deletedEmployes"] as const,
 };
 
@@ -49,6 +53,26 @@ export const useDeletedEmployes = () => {
     deletedEmployesLoading,
     deletedEmployesError,
     deletedEmployesData,
+  };
+};
+
+export const useGetEmploye = (employeeId: string) => {
+  const {
+    isLoading: employeLoading,
+    error: employeError,
+    data: employeData,
+    isFetched,
+  } = useQuery<boolean, Error, any>(
+    employeeKeys.employe(employeeId),
+    () => getEmployee(employeeId),
+    { enabled: !!employeeId }
+  );
+
+  return {
+    employeLoading,
+    employeError,
+    employeData,
+    isFetched,
   };
 };
 
