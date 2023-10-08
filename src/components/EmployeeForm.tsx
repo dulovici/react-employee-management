@@ -7,25 +7,24 @@ import { employeeForm } from "../providers/forms";
 import {
   employeeKeys,
   useCreateEmploye,
-  useDeleteEmploye,
   useGetEmploye,
   useUpdateEmployee,
 } from "../providers/employeeQueries";
 import { Employee } from "../types/types";
 import { useQueryClient } from "react-query";
+import DeleteEmployeeModal from "./modals/DeleteEmployeeModal";
 
 interface IEmployeeForm {
   id?: string;
 }
 
 const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
-  const { setIsOpen } = useModalContext();
+  const { setIsOpen, openModal } = useModalContext();
   const { employeData, employeLoading } = useGetEmploye(id);
 
   const queryClient = useQueryClient();
   const createEmploye = useCreateEmploye();
   const updateEmployee = useUpdateEmployee();
-  const deleteEmployee = useDeleteEmploye();
 
   const closeForm = () => {
     formik.resetForm();
@@ -34,8 +33,9 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   };
 
   const deleteEmployeeHandler = (id: string) => {
-    deleteEmployee.mutate(id);
-    closeForm();
+    openModal(<DeleteEmployeeModal id={id} />, {
+      title: "Are you sure you want to delete this employee?",
+    });
   };
 
   const subbmitHandler = (id: string, values: Employee) => {
@@ -58,18 +58,10 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   }, [employeData]);
 
   useEffect(() => {
-    if (
-      createEmploye.isSuccess ||
-      updateEmployee.isSuccess ||
-      deleteEmployee.isSuccess
-    ) {
+    if (createEmploye.isSuccess || updateEmployee.isSuccess) {
       queryClient.invalidateQueries(employeeKeys.employes());
     }
-  }, [
-    createEmploye.isSuccess,
-    updateEmployee.isSuccess,
-    deleteEmployee.isSuccess,
-  ]);
+  }, [createEmploye.isSuccess, updateEmployee.isSuccess]);
 
   if (employeLoading) {
     return <div>Loading...</div>;
@@ -262,5 +254,4 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
 
 export default EmployeeForm;
 
-//popravi post??
 //Sredi Date polja

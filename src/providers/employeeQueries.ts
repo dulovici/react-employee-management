@@ -37,7 +37,7 @@ export const useGetEmployes = (page: number, limit: number) => {
     ...el,
     id: el._id,
   }));
-  //I remapped this becouse DataGrid component require id field, and on api im getting _id
+  //I remapped data becouse DataGrid component require "id" field, and on response im getting "_id"
 
   return {
     employesLoading,
@@ -61,7 +61,7 @@ export const useDeletedEmployes = (page: number, limit: number) => {
     ...el,
     id: el._id,
   }));
-  //I remapped this becouse DataGrid component require id field, and on api im getting _id
+  //I remapped data becouse DataGrid component require "id" field, and on response im getting "_id"
 
   return {
     deletedEmployesLoading,
@@ -94,7 +94,7 @@ export const useGetEmploye = (employeeId: string) => {
 export const useCreateEmploye = () =>
   useMutation((employee: Employee) => createEmployee(employee), {
     onSuccess: () => {
-      console.log("successCallback();");
+      //call SnackBar
     },
   });
 
@@ -112,4 +112,4 @@ export const useDeleteEmploye = () =>
     },
   });
 
-//Resi clg
+//Resi tostere
