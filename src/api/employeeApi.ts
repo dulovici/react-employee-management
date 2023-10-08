@@ -30,8 +30,3 @@ export const deleteEmployee = async (employeeId: string) => {
   const result = await client.delete(`/employees/soft-delete/${employeeId}`);
   return result.data;
 };
-
-export const recentlyDeletedCleanup = async () => {
-  const result = await client.get(`/employees/db-cleanup`);
-  return result.data;
-};

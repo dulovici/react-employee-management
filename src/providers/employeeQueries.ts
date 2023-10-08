@@ -16,9 +16,11 @@ export const employeeKeys = {
     return ["employes"];
   },
 
-  employe: (employeeId: string) => ["employe", employeeId] as const,
+  employe: (employeeId: string) => ["employe", employeeId],
 
-  deletedEmployes: ["deletedEmployes"] as const,
+  deletedEmployes: ["deletedEmployes"],
+
+  cleanup: ["deletedEmployes"],
 };
 
 export const useGetEmployes = (page: number, limit: number) => {
@@ -32,7 +34,7 @@ export const useGetEmployes = (page: number, limit: number) => {
     () => getEmployees(pageToUse, limit)
   );
 
-  const employesData = data?.employees.map((el: Employee) => ({
+  const employesData = data?.employees?.map((el: Employee) => ({
     ...el,
     id: el._id,
   }));
@@ -54,7 +56,7 @@ export const useDeletedEmployes = () => {
     getDeletedEmployees()
   );
 
-  const deletedEmployesData = data?.employees.map((el: Employee) => ({
+  const deletedEmployesData = data?.employees?.map((el: Employee) => ({
     ...el,
     id: el._id,
   }));

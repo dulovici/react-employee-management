@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { employeeTableConfig } from "../providers/tableConfigs";
 import { useDeletedEmployes } from "../providers/employeeQueries";
 
 const DeletedEmployeeList = () => {
-  const columns = employeeTableConfig;
   const {
     deletedEmployesData = [],
     deletedEmployesLoading,
@@ -23,7 +21,7 @@ const DeletedEmployeeList = () => {
     <Box sx={{ height: 400, width: "50%" }}>
       <DataGrid
         rows={deletedEmployesData}
-        columns={columns}
+        columns={employeeTableConfig}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },
@@ -31,21 +29,10 @@ const DeletedEmployeeList = () => {
         }}
         pageSizeOptions={[5, 10]}
       />
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          width: "100%",
-          marginTop: "0.5rem",
-        }}
-      >
-        <Button variant="contained">Clear</Button>
-      </Box>
     </Box>
   );
 };
 
 export default DeletedEmployeeList;
 
-//FIX ANY
+//umesto starting date ubaci deletet at kolonu
