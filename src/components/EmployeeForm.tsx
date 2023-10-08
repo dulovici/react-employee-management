@@ -228,4 +228,6 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
 
 export default EmployeeForm;
 
+//popravi post??
+//resi invalidaciju
 //Sredi Date polja
