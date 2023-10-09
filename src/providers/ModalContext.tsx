@@ -5,10 +5,11 @@ import React, { useState } from "react";
 export const ModalContext = React.createContext<any>(undefined);
 ModalContext.displayName = "Modal Context";
 
+//Set types on context
 const ModalProvider = (props: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<JSX.Element>();
-  const [options, setOptions] = useState<any>({});
+  const [options, setOptions] = useState<any>({}); //Fix any
 
   const openModal = (content: JSX.Element, modalOptions: any) => {
     if (content) {
@@ -49,5 +50,3 @@ const useModalContext = () => {
 };
 
 export { ModalProvider, useModalContext };
-
-//Set types on context

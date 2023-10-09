@@ -11,7 +11,7 @@ enum ActiveList {
 const Employees = () => {
   const [selectedTab, setSelectedTab] = useState<ActiveList>(0);
 
-  const handleChange = (_: unknown, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
 

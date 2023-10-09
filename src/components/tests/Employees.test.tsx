@@ -38,7 +38,6 @@ test('displays EmployeeList when "Employees" tab is selected', () => {
 });
 
 test('displays DeletedEmployeeList when "Recently Deleted" tab is selected', () => {
-  // spyUseGetEmployes();
   spyUseDeletedEmployes();
 
   renderEmployeesPage();
