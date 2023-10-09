@@ -13,6 +13,7 @@ import {
 import { Employee } from "../types/types";
 import { useQueryClient } from "react-query";
 import DeleteEmployeeModal from "./modals/DeleteEmployeeModal";
+import { useNotificationsContext } from "../providers/NotificationsContext";
 
 interface IEmployeeForm {
   id?: string;
@@ -21,6 +22,7 @@ interface IEmployeeForm {
 const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   const { setIsOpen, openModal } = useModalContext();
   const { employeData, employeLoading } = useGetEmploye(id);
+  const { notify } = useNotificationsContext();
 
   const queryClient = useQueryClient();
   const createEmploye = useCreateEmploye();
@@ -57,8 +59,12 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   }, [employeData]);
 
   useEffect(() => {
-    if (createEmploye.isSuccess || updateEmployee.isSuccess) {
-      queryClient.invalidateQueries(employeeKeys.employes());
+    if (createEmploye.isSuccess) {
+      notify("New emloyee added");
+      closeForm();
+    }
+    if (updateEmployee.isSuccess) {
+      notify("Employee info updated");
       closeForm();
     }
   }, [createEmploye.isSuccess, updateEmployee.isSuccess]);
