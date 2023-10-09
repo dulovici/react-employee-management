@@ -1,27 +1,9 @@
-# React + TypeScript + Vite
+# React + TypeScript + MUI + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hi guys and thank you for looking at my project!
 
-Currently, two official plugins are available:
+I am used to working with tailwind for styling, but trying out MUI has been fun and it has some advantages because it has finished functional components. Maybe I am not aware of some of the best practices related to custom styles, but my focus was to finish the assignment as soon as possible.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+When testing this, as you are probably aware, sometimes the POST endpoint `/employees` returns a 500 response for no real reason and I couldn't find a pattern when it happens. The same situation happens on swagger. If that happens to you too, just wait a couple of moments and it should work again.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Overall, I have some ideas on how to improve the code and we can talk more about that in person.
