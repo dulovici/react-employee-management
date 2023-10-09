@@ -13,3 +13,12 @@ export type Employee = {
   dateOfEmployment: string;
   dateOfBirth: string;
 };
+
+export type ModalOptions = {
+  title?: string;
+};
+
+export type ModalService = {
+  openModal: (content: JSX.Element, modalOptions: ModalOptions) => void;
+  closeModal: () => void;
+};

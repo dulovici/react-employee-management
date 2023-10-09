@@ -13,7 +13,7 @@ interface IDeleteEmployeeModal {
 }
 
 const DeleteEmployeeModal: FC<IDeleteEmployeeModal> = ({ id }) => {
-  const { setIsOpen } = useModalContext();
+  const { closeModal } = useModalContext();
   const deleteEmployee = useDeleteEmploye();
   const queryClient = useQueryClient();
   const { notify } = useNotificationsContext();
@@ -22,7 +22,7 @@ const DeleteEmployeeModal: FC<IDeleteEmployeeModal> = ({ id }) => {
     if (deleteEmployee.isSuccess) {
       queryClient.invalidateQueries(employeeKeys.employes());
       notify("Employee deleted");
-      setIsOpen(false);
+      closeModal();
     }
   }, [deleteEmployee.isSuccess]);
 
@@ -32,7 +32,7 @@ const DeleteEmployeeModal: FC<IDeleteEmployeeModal> = ({ id }) => {
         sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
       >
         <Button onClick={() => deleteEmployee.mutate(id)}>Delete</Button>
-        <Button onClick={() => setIsOpen(false)}>Cancel</Button>
+        <Button onClick={() => closeModal()}>Cancel</Button>
       </Box>
     </div>
   );
