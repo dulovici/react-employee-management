@@ -92,24 +92,10 @@ export const useGetEmploye = (employeeId: string) => {
 };
 
 export const useCreateEmploye = () =>
-  useMutation((employee: Employee) => createEmployee(employee), {
-    onSuccess: () => {
-      //call SnackBar
-    },
-  });
+  useMutation((employee: Employee) => createEmployee(employee));
 
 export const useUpdateEmployee = () =>
-  useMutation((employee: Employee) => updateEmployee(employee), {
-    onSuccess: () => {
-      console.log("successCallback();");
-    },
-  });
+  useMutation((employee: Employee) => updateEmployee(employee));
 
 export const useDeleteEmploye = () =>
-  useMutation((employeeId: string) => deleteEmployee(employeeId), {
-    onSuccess: () => {
-      console.log("successCallback();");
-    },
-  });
-
-//Resi tostere
+  useMutation((employeeId: string) => deleteEmployee(employeeId));

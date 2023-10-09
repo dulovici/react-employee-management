@@ -63,11 +63,21 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
       notify("New emloyee added");
       closeForm();
     }
+
     if (updateEmployee.isSuccess) {
       notify("Employee info updated");
       closeForm();
     }
-  }, [createEmploye.isSuccess, updateEmployee.isSuccess]);
+
+    if (createEmploye.isError || updateEmployee.isError) {
+      notify("Somthing went wrong");
+    }
+  }, [
+    createEmploye.isSuccess,
+    updateEmployee.isSuccess,
+    createEmploye.isError,
+    updateEmployee.isError,
+  ]);
 
   if (employeLoading) {
     return <div>Loading...</div>;
