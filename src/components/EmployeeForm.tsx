@@ -20,7 +20,7 @@ interface IEmployeeForm {
 }
 
 const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
-  const { setIsOpen, openModal } = useModalContext();
+  const { closeModal, openModal } = useModalContext();
   const { employeData, employeLoading } = useGetEmploye(id);
   const { notify } = useNotificationsContext();
 
@@ -31,7 +31,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   const closeForm = () => {
     formik.resetForm();
     queryClient.invalidateQueries(employeeKeys.employes());
-    setIsOpen(false);
+    closeModal();
   };
 
   const deleteEmployeeHandler = (id: string) => {

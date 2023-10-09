@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import React, { useState } from "react";
+import { ModalOptions, ModalService } from "../types/types";
 
-export const ModalContext = React.createContext<any>(undefined);
+export const ModalContext = React.createContext<ModalService | null>(null);
 ModalContext.displayName = "Modal Context";
 
-//Set types on context
 const ModalProvider = (props: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<JSX.Element>();
-  const [options, setOptions] = useState<any>({}); //Fix any
+  const [modalContent, setModalContent] = useState<JSX.Element>(<></>);
+  const [options, setOptions] = useState<ModalOptions>({});
 
-  const openModal = (content: JSX.Element, modalOptions: any) => {
+  const openModal = (content: JSX.Element, modalOptions: ModalOptions) => {
     if (content) {
       setModalContent(content);
       setOptions({ ...options, ...modalOptions });
@@ -19,13 +19,18 @@ const ModalProvider = (props: any) => {
     }
   };
 
+  const closeModal = () => {
+    setModalContent(<></>);
+    setOptions({});
+    setIsOpen(false);
+  };
+
   const values = React.useMemo(
     () => ({
-      isOpen,
-      setIsOpen,
       openModal,
+      closeModal,
     }),
-    [isOpen, modalContent, openModal, options]
+    [isOpen, modalContent, options]
   );
 
   return (
