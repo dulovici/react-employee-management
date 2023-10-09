@@ -25,7 +25,7 @@ const DeletedEmployeeList = () => {
   }
 
   return (
-    <Box sx={{ height: 400, width: "50%" }}>
+    <Box sx={{ height: 400, width: "50%" }} data-testid="employee-list">
       <DataGrid
         rows={deletedEmployesData}
         columns={deletedEmployesTableConfig}

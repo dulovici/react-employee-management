@@ -37,6 +37,7 @@ function EmployeeList() {
   return (
     <>
       <Box
+        data-testid="employee-list"
         sx={{
           height: 400,
           width: "50%",
