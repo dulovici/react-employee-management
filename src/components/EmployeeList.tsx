@@ -23,7 +23,7 @@ function EmployeeList() {
     openModal(<EmployeeForm />, { title: "Create new employee" });
   };
 
-  const handleRowClick = (params: { id: any }) => {
+  const handleRowClick = (params: any) => {
     openModal(<EmployeeForm id={params.id} />, { title: "Edit employee info" });
   };
 
@@ -75,6 +75,3 @@ function EmployeeList() {
 }
 
 export default EmployeeList;
-
-//FIX ANY
-//Cursor pointer on every row

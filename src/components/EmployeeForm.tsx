@@ -269,5 +269,3 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
 };
 
 export default EmployeeForm;
-
-//Sredi Date polja
