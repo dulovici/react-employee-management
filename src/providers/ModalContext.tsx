@@ -31,7 +31,6 @@ const ModalProvider = (props: any) => {
     <ModalContext.Provider value={values} {...props}>
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} maxWidth="md">
         <DialogTitle>{options.title || ""}</DialogTitle>
-
         <DialogContent>{modalContent}</DialogContent>
       </Dialog>
       {props.children}
@@ -50,3 +49,5 @@ const useModalContext = () => {
 };
 
 export { ModalProvider, useModalContext };
+
+//Set types on context

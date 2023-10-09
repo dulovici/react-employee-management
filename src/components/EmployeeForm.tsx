@@ -40,7 +40,6 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
 
   const subbmitHandler = (id: string, values: Employee) => {
     id ? updateEmployee.mutate(values) : createEmploye.mutate(values);
-    closeForm();
   };
 
   const formik = useFormik({
@@ -60,6 +59,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   useEffect(() => {
     if (createEmploye.isSuccess || updateEmployee.isSuccess) {
       queryClient.invalidateQueries(employeeKeys.employes());
+      closeForm();
     }
   }, [createEmploye.isSuccess, updateEmployee.isSuccess]);
 
