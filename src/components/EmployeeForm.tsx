@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { FC, useEffect } from "react";
 import { useModalContext } from "../providers/ModalContext";
@@ -80,7 +80,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ id = "" }) => {
   ]);
 
   if (employeLoading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   return (

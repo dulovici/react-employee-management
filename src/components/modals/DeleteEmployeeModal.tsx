@@ -32,7 +32,7 @@ const DeleteEmployeeModal: FC<IDeleteEmployeeModal> = ({ id }) => {
         sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
       >
         <Button onClick={() => deleteEmployee.mutate(id)}>Delete</Button>
-        <Button onClick={() => setIsOpen(false)}>Cancel</Button>
+        <Button onClick={() => closeModal()}>Cancel</Button>
       </Box>
     </div>
   );
